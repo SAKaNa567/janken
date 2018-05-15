@@ -3,25 +3,14 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"math/rand"
+	"Web_Application_By_Go/voyage/gin-api/model"
+	"Web_Application_By_Go/voyage/gin-api/service"
 )
 
-type jankenGetRes struct {
-	Janken string `json:"相手が出した手"`
-}
-
-func JankenGetController(c *gin.Context){
-	judge := rand.Intn(3)
-	janken := "void"
-	switch judge {
-	case 0:
-		janken = "pa"
-	case 1:
-		janken = "gu"
-	case 2:
-		janken = "tyoki"
-	}
-	c.JSON(http.StatusOK, jankenGetRes{
-		Janken: janken,
-	})
+func UserPostController(c *gin.Context) {
+	json := &model.UserPostReq{}
+	service.ComputerHand(json)//コンピュタの手を生成+格納
+	c.ShouldBindJSON(json)//ユーザの手を格納
+	service.JudgeWinner(json)
+	c.JSON(http.StatusOK,json)
 }

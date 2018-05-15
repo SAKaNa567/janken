@@ -7,6 +7,6 @@ import (
 
 func main() {
 	m := gin.Default()
-	m.GET("/janken",controller.JankenGetController)
+	m.POST("/game",controller.UserPostController)
 	m.Run(":8080")
 }
