@@ -7,11 +7,21 @@ import (
 )
 
 type jankenGetRes struct {
-	janken int `json:username`
+	Janken string `json:"相手が出した手"`
 }
 
 func JankenGetController(c *gin.Context){
+	judge := rand.Intn(3)
+	janken := "void"
+	switch judge {
+	case 0:
+		janken = "pa"
+	case 1:
+		janken = "gu"
+	case 2:
+		janken = "tyoki"
+	}
 	c.JSON(http.StatusOK, jankenGetRes{
-		janken: rand.Intn(3),
+		Janken: janken,
 	})
 }
